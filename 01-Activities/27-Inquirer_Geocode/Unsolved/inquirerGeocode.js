@@ -1,5 +1,5 @@
 // Instructions:
-// Convert the below geocoding code from earlier today so that it uses inquirer.js instead of process.argv to handle the intake of user inputs. 
+// Convert the below geocoding code from earlier today so that it uses inquirer.js instead of process.argv to handle the intake of user inputs.
 // Make sure your new code provides the exact same output as it did with process.argv.
 
 // HINT: Don't forget to create your package.json file and save the correct packages to it.
@@ -7,30 +7,28 @@
 
 // ========================================================================================================================
 
-// Include the geocoder NPM package (Remember to run "npm install geocoder"!)
+// Include the geocoder and inquirer NPM packages
 var geocoder = require("geocoder");
+var inquirer = require("inquirer");
 
-// Take in the command line arguments
-var nodeArgs = process.argv;
+// Prompt the user to provide location information.
+inquirer.prompt([
 
-// Create an empty string for holding the address
-var address = "";
+  {
+    type: "input",
+    name: "userInput",
+    message: "Which location or landmark would you like to geocode?"
+  }
 
-// Capture all the words in the address (again ignoring the first two Node arguments)
-for (var i = 2; i < nodeArgs.length; i++) {
+  // After the prompt, store the user's response in a variable called location.
+]).then(function (location) {
 
-  // Build a string with the address.
-  address = address + "" + nodeArgs[i];
-  console.log(address);
+  // console.log(location.userInput);
 
-}
+  // Then use the Google Geocoder to Geocode the address
+  geocoder.geocode(location.userInput, function (err, data) {
 
-// Then use the Google Geocoder to geocode the address
-geocoder.geocode(address, function(err, data) {
+    console.log(JSON.stringify(data, null, 2));
+  });
 
-  // Then console log the result and stringify it.
-  // Note the argument of "2" being included in the JSON stringify. This makes the JSON output pretty.
-  // See link here: http://stackoverflow.com/questions/4810841/how-can-i-pretty-print-json-using-javascript
-  console.log(JSON.stringify(data, null, 2));
 });
-

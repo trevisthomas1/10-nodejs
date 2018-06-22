@@ -12,16 +12,28 @@
 // Include the geocoder NPM package (Remember to run "npm install geocoder"!)
 
 
+var geocoder = require("geocoder");
 
+var nodeArg = process.argv;
+var myAddress = nodeArg[2];
 
-// Take in the command line arguments
+geocoder.geocode(myAddress, function (err, result) {
 
+    if (err) {
+        console.log(err);
+    }
+    console.log(JSON.stringify(result, null, 2));
+});
 
+//To manage for full address:
+// var geocoder = require("geocoder");
+// var input = process.argv.slice(2).join(" ");
+// console.log("Input: " + input);
+// geocoder.geocode(input, function ( err, data ) {
+//   if (err) {
+//     console.log("Error: " + err)
+//     return
+//   }
 
-
-// Build your address as an array or string
-
-
-
-
-// Then use Geocoder NPM to geocode the address
+//   console.log(JSON.stringify(data, null, 2));
+// });
